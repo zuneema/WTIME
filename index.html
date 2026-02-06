@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+const grid = document.getElementById('grid');
+grid.innerHTML = '';
+
+
+const urls = document.getElementById('links').value.split('\n');
+const ids = [];
+
+
+urls.forEach(url => {
+const id = extractID(url.trim());
+if (id) {
+ids.push(id);
+grid.appendChild(createIframe(id));
+}
+});
+
+
+history.replaceState(null, '', '?videos=' + ids.join(','));
+}
+
+
+/* ---------- SHAREABLE LINK ---------- */
+function generateShareLink() {
+const iframes = document.querySelectorAll('iframe');
+if (!iframes.length) {
+alert('Load videos first');
+return;
+}
+const ids = [...iframes].map(f => f.src.split('/embed/')[1]);
+const link = `${location.origin}${location.pathname}?videos=${ids.join(',')}`;
+navigator.clipboard.writeText(link);
+alert('Shareable link copied!');
+}
+
+
+function loadFromURL() {
+const params = new URLSearchParams(window.location.search);
+const data = params.get('videos');
+if (!data) return;
+
+
+const grid = document.getElementById('grid');
+grid.innerHTML = '';
+
+
+data.split(',').forEach(id => {
+grid.appendChild(createIframe(id));
+});
+}
+
+
+/* ---------- WATCH TIME TRACKER ---------- */
+let watchTime = Number(localStorage.getItem('watchTime')) || 0;
+let interval;
+
+
+document.getElementById('time').innerText = watchTime;
+
+
+function startTracking() {
+if (interval) return;
+interval = setInterval(() => {
+watchTime++;
+localStorage.setItem('watchTime', watchTime);
+document.getElementById('time').innerText = watchTime;
+}, 1000);
+}
+
+
+function stopTracking() {
+clearInterval(interval);
+interval = null;
+}
+
+
+function resetTracking() {
+watchTime = 0;
+localStorage.removeItem('watchTime');
+document.getElementById('time').innerText = 0;
+}
+
+
+window.onload = loadFromURL;
+</script>
+
+
+</body>
+</html><!DOCTYPE html>
+const grid = document.getElementById('grid');
+grid.innerHTML = '';
+
+
+const urls = document.getElementById('links').value.split('\n');
+const ids = [];
+
+
+urls.forEach(url => {
+const id = extractID(url.trim());
+if (id) {
+ids.push(id);
+grid.appendChild(createIframe(id));
+}
+});
+
+
+history.replaceState(null, '', '?videos=' + ids.join(','));
+}
+
+
+/* ---------- SHAREABLE LINK ---------- */
+function generateShareLink() {
+const iframes = document.querySelectorAll('iframe');
+if (!iframes.length) {
+alert('Load videos first');
+return;
+}
+const ids = [...iframes].map(f => f.src.split('/embed/')[1]);
+const link = `${location.origin}${location.pathname}?videos=${ids.join(',')}`;
+navigator.clipboard.writeText(link);
+alert('Shareable link copied!');
+}
+
+
+function loadFromURL() {
+const params = new URLSearchParams(window.location.search);
+const data = params.get('videos');
+if (!data) return;
+
+
+const grid = document.getElementById('grid');
+grid.innerHTML = '';
+
+
+data.split(',').forEach(id => {
+grid.appendChild(createIframe(id));
+});
+}
+
+
+/* ---------- WATCH TIME TRACKER ---------- */
+let watchTime = Number(localStorage.getItem('watchTime')) || 0;
+let interval;
+
+
+document.getElementById('time').innerText = watchTime;
+
+
+function startTracking() {
+if (interval) return;
+interval = setInterval(() => {
+watchTime++;
+localStorage.setItem('watchTime', watchTime);
+document.getElementById('time').innerText = watchTime;
+}, 1000);
+}
+
+
+function stopTracking() {
+clearInterval(interval);
+interval = null;
+}
+
+
+function resetTracking() {
+watchTime = 0;
+localStorage.removeItem('watchTime');
+document.getElementById('time').innerText = 0;
+}
+
+
+window.onload = loadFromURL;
+</script>
+
+
+</body>
+</html>
